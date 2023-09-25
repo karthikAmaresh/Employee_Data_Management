@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "3YcfteqNvBz/2o8Tj5fOPJaZcqjX6UxvCH+lvhKbf87qdwGdUOhsSH64zTEtvcGYd8r1DjydBYbZ70dmtus3Yg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\karthik.amaresh\\OneDrive - Neudesic\\Desktop\\Q3 goals\\Employee_Data_Management\\Employee_Management\\Domain\\Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\karthik.amaresh\\.nuget\\packages\\mediatr\\12.1.1\\mediatr.12.1.1.nupkg.sha512",
+    "C:\\Users\\karthik.amaresh\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\karthik.amaresh\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
