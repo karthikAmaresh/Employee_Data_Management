@@ -29,7 +29,7 @@ namespace Employee_Management.Controllers
         public async Task<IActionResult> GetEmployeeById(string id)
         {
             var employeeId = id;
-            return Ok(_mediator.Send(new GetEmployeeByIdQuery(employeeId)));
+            return Ok(await _mediator.Send(new GetEmployeeByIdQuery(employeeId)));
         }
         // POST api/items
         [HttpPost]
@@ -58,7 +58,7 @@ namespace Employee_Management.Controllers
                     {
                         return UnprocessableEntity(ModelState);
                     }
-                    var result = _mediator.Send(command);
+                    var result = await _mediator.Send(command);
                     return new OkObjectResult(result);
                 }
                 catch (Exception ex)
@@ -72,7 +72,7 @@ namespace Employee_Management.Controllers
             }
         }
 
-        /*[HttpPost]
+        [HttpPut]
         public async Task<IActionResult> UpdateEmployee([FromBody] UpdateEmployeeCommand command)
         {
             var validate = new UpdateEmployeeEmailVaidator();
@@ -98,7 +98,7 @@ namespace Employee_Management.Controllers
                     {
                         return UnprocessableEntity(ModelState);
                     }
-                    var result = _mediator.Send(command);
+                    var result = await _mediator.Send(command);
                     return new OkObjectResult(result);
                 }
                 catch (Exception ex)
@@ -110,7 +110,7 @@ namespace Employee_Management.Controllers
             {
                 return new BadRequestObjectResult(validationResult.Errors.Select(x => x.ErrorMessage));
             }
-        }*/
+        }
 
         // DELETE api/items/5
         [HttpDelete("{id}")]
@@ -118,7 +118,7 @@ namespace Employee_Management.Controllers
         {
             try
             {
-                var result = _mediator.Send(new DeleteEmployeeById(id));
+                var result = await _mediator.Send(new DeleteEmployeeById(id));
                 return new OkObjectResult(result);
             }
             catch (Exception ex)

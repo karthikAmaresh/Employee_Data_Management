@@ -41,7 +41,7 @@ namespace Infrastructure.Services
                 var response = await _container.ReadItemAsync<Employee>(id, new PartitionKey(id));
                 return response.Resource;
             }
-            catch (CosmosException) //For handling item not found and other exceptions
+            catch (CosmosException ex) //For handling item not found and other exceptions
             {
                 return null;
             }
@@ -49,7 +49,7 @@ namespace Infrastructure.Services
 
         public async Task<string> AddEmployee(AddEmployeeCommand employee)
         {
-            Guid newId = new Guid();
+            Guid newId = Guid.NewGuid();
             Employee employeeDetails = new Employee()
             {
                 id = newId.ToString(),
