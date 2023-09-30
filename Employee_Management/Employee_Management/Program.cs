@@ -20,9 +20,11 @@ builder.Services.AddSingleton<IEmployeeService>(options =>
     var account = builder.Configuration.GetSection("AzureCosmosDBSettings").GetValue<string>("URL");
     var key = builder.Configuration.GetSection("AzureCosmosDBSettings").GetValue<string>("PrimaryKey");
     var client = new Microsoft.Azure.Cosmos.CosmosClient(account, key);
-    var cosmosDbService = new EmployeeService(client, databaseName, containerName);
+    var logger = options.GetRequiredService<ILogger<EmployeeService>>();
+    var cosmosDbService = new EmployeeService(client, databaseName, containerName,logger);
     return cosmosDbService;
 });
+builder.Services.AddApplicationInsightsTelemetry(builder.Configuration.GetSection("ApplicationInsights").GetValue<string>("InstrumentationKey"));
 
 
 
