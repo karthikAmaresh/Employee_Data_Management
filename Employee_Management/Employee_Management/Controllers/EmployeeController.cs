@@ -5,6 +5,7 @@ using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Reflection;
 
 namespace Employee_Management.Controllers
@@ -14,13 +15,16 @@ namespace Employee_Management.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public EmployeeController(IMediator mediator)
+        private readonly ILogger<EmployeeController> _logger;
+        public EmployeeController(IMediator mediator , ILogger<EmployeeController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
         [HttpGet]
         public async Task<IActionResult> List()
         {
+            _logger.LogInformation($"Retrieving Employee List");
             var result = await _mediator.Send(new GetAllEmployees());
             return Ok(result);
         }
@@ -28,6 +32,7 @@ namespace Employee_Management.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEmployeeById(string id)
         {
+            _logger.LogInformation($"Retrieving Employee of id {id}");
             var employeeId = id;
             return Ok(await _mediator.Send(new GetEmployeeByIdQuery(employeeId)));
         }
@@ -35,6 +40,7 @@ namespace Employee_Management.Controllers
         [HttpPost]
         public async Task<IActionResult> AddEmployee([FromBody] AddEmployeeCommand command)
         {
+            _logger.LogInformation($"Creating Employee {command.firstName} {command.lastName}");
             var validate = new EmployeeEmailVaidator();
             var validationResult = validate.Validate(command);
             if (validationResult.IsValid)
@@ -75,6 +81,7 @@ namespace Employee_Management.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateEmployee([FromBody] UpdateEmployeeCommand command)
         {
+            _logger.LogInformation($"Updating Employee with id {command.id}");
             var validate = new UpdateEmployeeEmailVaidator();
             var validationResult = validate.Validate(command);
             if (validationResult.IsValid)
@@ -116,6 +123,7 @@ namespace Employee_Management.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployee(string id)
         {
+            _logger.LogInformation($"Deleting Employee with id {id}");
             try
             {
                 var result = await _mediator.Send(new DeleteEmployeeById(id));
